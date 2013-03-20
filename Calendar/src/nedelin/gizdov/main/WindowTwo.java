@@ -52,8 +52,6 @@ public class WindowTwo extends JFrame{
 		container.add(panelUp);
 		
 		
-		
-		
 		WindowTwo win = new WindowTwo();
 		win.setLayout(new BorderLayout(0, 0));
 		
