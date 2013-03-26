@@ -74,9 +74,9 @@ public class Main
     private void initialize()
     {
         frmCalendar = new JFrame();
-        frmCalendar.setResizable(false);
+        frmCalendar.setResizable(true);
         frmCalendar.setTitle("CALENDAR");
-        frmCalendar.setBounds(100, 100, 650, 550);
+        frmCalendar.setBounds(100, 100, 660, 550);
         frmCalendar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JMenuBar menuBar = new JMenuBar();
