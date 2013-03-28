@@ -1,10 +1,7 @@
 package nedelin.gizdov.utils;
 
-import java.awt.Color;
 import java.util.Calendar;
-
 import javax.swing.*;
-import javax.swing.plaf.ButtonUI;
 
 public class Utils
 {
@@ -22,19 +19,18 @@ public class Utils
         
         int count = 0;
         int i, j = 1;
+        int week = 0;
         fillPrevMonthDays(panel, weekFirstDay, firstDay, cal.get(Calendar.MONTH));
         for (i = firstDay; i < weekLastDay; i++, j++)
         {
-//            JButton button = new JButton(String.valueOf(j));
             JButton button = new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + j + ".png"));
-//            button.setOpaque(true);
-//            button.setBackground(Color.GREEN);
-//            button.setContentAreaFilled(true);
             panel.add(button);
             count++;
         }
+        week++;
         int remainingDays = days - count;
         int weeks = remainingDays / 7;
+        week += weeks;
         int lastWeekDays = remainingDays % 7;
         if (lastWeekDays != 0)
         {
@@ -42,29 +38,33 @@ public class Utils
             {
                 for (i = 1; i <= 7; i++, j++)
                 {
-//                    JButton button = new JButton(String.valueOf(j));
                     JButton button = new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + j + ".png"));
-//                    button.setOpaque(true);
-//                    button.setBackground(Color.GREEN);
                     panel.add(button);
                 }
+                
             }
             for (i = 1; i <= lastWeekDays; i++, j++)
             {
-//                JButton button = new JButton(String.valueOf(j));
                 JButton button = new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + j + ".png"));
-//                button.setOpaque(true);
-//                button.setBackground(Color.GREEN);
                 panel.add(button);
             }
-            for (i = 1; i <= 7 - lastWeekDays; i++)
+            for (i = 1, j = 1; i <= 7 - lastWeekDays; i++, j++)
             {
-//                JButton button = new JButton(String.valueOf(i));
-                JButton button = new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/old/" + i + ".png"));
-//                button.setOpaque(true);
-//                button.setBackground(Color.LIGHT_GRAY);
-//                button.setUI(ButtonUI.createUI(c));
+                JButton button = new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/old/" + j + ".png"));
                 panel.add(button);
+            }
+            week++;
+            if (week < 6)
+            {
+                for (int k = week; k < 6; k++)
+                {
+                    for (i = 1; i <= 7; i++, j++)
+                    {
+                        JButton button = new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/old/" + j + ".png"));
+                        panel.add(button);
+                    }
+                    
+                }
             }
         }
         else
@@ -73,12 +73,21 @@ public class Utils
             {
                 for (i = 1; i <= 7; i++, j++)
                 {
-//                    JButton button = new JButton(String.valueOf(j));
                     JButton button = new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + j + ".png"));
-
-//                    button.setOpaque(true);
-//                    button.setBackground(Color.GREEN);
                     panel.add(button);
+                }
+            }
+            if (week < 6)
+            {
+                j = 1;
+                for (int k = week; k < 6; k++)
+                {
+                    for (i = 1; i <= 7; i++, j++)
+                    {
+                        JButton button = new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/old/" + j + ".png"));
+                        panel.add(button);
+                    }
+                    
                 }
             }
         }
@@ -93,11 +102,7 @@ public class Utils
         int stamp = prevMonthDays - firstWeekDayCurMonth + weekFirstDay + 1;
         for (int i = weekFirstDay; (stamp <= prevMonthDays) && (i < firstWeekDayCurMonth); i++, stamp++)
         {
-//            JButton button = new JButton(String.valueOf(stamp));
             JButton button = new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/old/" + stamp + ".png"));
-//            button.setText(String.valueOf(stamp));
-//            button.setOpaque(true);
-//            button.setBackground(Color.LIGHT_GRAY);
             panel.add(button);
         }
     }
