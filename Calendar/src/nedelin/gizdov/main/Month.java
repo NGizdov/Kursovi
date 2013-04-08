@@ -24,11 +24,13 @@ public class Month extends JPanel {
 			"DECEMBER" };
 	private JLabel monthLabel;
 	private DatesPanel datesPanel;
+	private JPanel mainPanel;
 
 	/**
 	 * Create the panel.
 	 */
 	public Month(Calendar date, JPanel main) {
+		mainPanel = main;
 		cal = date;
 		JPanel weekDaysPanel = new JPanel();
 		weekDaysPanel.setLayout(new GridLayout(1, 7, 3, 3));
@@ -66,27 +68,21 @@ public class Month extends JPanel {
 
 		JPanel bottomPanel = new JPanel();
 		GroupLayout gl_mainPanel = new GroupLayout(this);
-		gl_mainPanel.setHorizontalGroup(gl_mainPanel
-				.createParallelGroup(Alignment.LEADING)
-				.addComponent(weekDaysPanel, GroupLayout.PREFERRED_SIZE, 500,
-						Short.MAX_VALUE)
-				.addComponent(datesPanel, GroupLayout.DEFAULT_SIZE, 500,
-						Short.MAX_VALUE)
-				.addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 500,
-						Short.MAX_VALUE));
-		gl_mainPanel.setVerticalGroup(gl_mainPanel.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				gl_mainPanel
-						.createSequentialGroup()
-						.addComponent(weekDaysPanel,
-								GroupLayout.PREFERRED_SIZE, 31,
-								GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(datesPanel, GroupLayout.DEFAULT_SIZE,
-								298, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE,
-								29, GroupLayout.PREFERRED_SIZE)));
+		gl_mainPanel.setHorizontalGroup(
+			gl_mainPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(datesPanel, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+				.addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+				.addComponent(weekDaysPanel, GroupLayout.PREFERRED_SIZE, 450, Short.MAX_VALUE)
+		);
+		gl_mainPanel.setVerticalGroup(
+			gl_mainPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_mainPanel.createSequentialGroup()
+					.addComponent(weekDaysPanel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(datesPanel, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+		);
 		month = cal.get(Calendar.MONTH);
 
 		monthLabel = new JLabel(months[month] + " - " + cal.get(Calendar.YEAR));
