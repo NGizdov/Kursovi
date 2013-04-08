@@ -14,7 +14,7 @@ public class DatesPanel extends JPanel
     private String[] months = { "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
             "NOVEMBER", "DECEMBER" };
     private ArrayList<JButton> buttons;
-    private static int number;
+    public static int number;
 
     /**
      * Create the panel.
@@ -26,17 +26,22 @@ public class DatesPanel extends JPanel
         buttons = new ArrayList<JButton>(42);
         for (int i = 0; i < 42; i++)
         {
-            number++;
-            buttons.add(new JButton(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + number + ".png")));
+            buttons.add(new JButton());
         }
         for (JButton button : buttons)
         {
             add(button);
         }
-//        drawDates(cal);
+        drawDates(cal);
     }
 
-    public void drawDates(Calendar cal)
+    public void reDrawDates(Calendar cal)
+    {
+        number = 0;
+        drawDates(cal);
+    }
+    
+    private void drawDates(Calendar cal)
     {
         Calendar newCal = cal;
 //        date = cal;
@@ -54,7 +59,7 @@ public class DatesPanel extends JPanel
         int i, j = 1;
         int week = 0;
         fillPrevMonthDays(weekFirstDay, firstDay, newCal.get(Calendar.MONTH));
-        for (i = firstDay; i < weekLastDay; i++, j++)
+        for (i = firstDay; i < weekLastDay && number < 42; i++, j++)
         {
             buttons.get(number).setIcon(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + j + ".png"));
             number++;
@@ -67,9 +72,9 @@ public class DatesPanel extends JPanel
         int lastWeekDays = remainingDays % 7;
         if (lastWeekDays != 0)
         {
-            for (int k = 1; k <= weeks; k++)
+            for (int k = 1; k <= weeks && number < 42; k++)
             {
-                for (i = 1; i <= 7; i++, j++)
+                for (i = 1; i <= 7 && number < 42; i++, j++)
                 {
                     buttons.get(number).setIcon(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + j + ".png"));
 //                    add(button);
@@ -77,13 +82,13 @@ public class DatesPanel extends JPanel
                 }
                 
             }
-            for (i = 1; i <= lastWeekDays; i++, j++)
+            for (i = 1; i <= lastWeekDays && number < 42; i++, j++)
             {
                 buttons.get(number).setIcon(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + j + ".png"));
 //                add(button);
                 number++;
             }
-            for (i = 1, j = 1; i <= 7 - lastWeekDays; i++, j++)
+            for (i = 1, j = 1; i <= 7 - lastWeekDays && number < 42; i++, j++)
             {
                 buttons.get(number).setIcon(new ImageIcon("src/nedelin/gizdov/icons/date/old/" + j + ".png"));
 //                add(button);
@@ -92,7 +97,7 @@ public class DatesPanel extends JPanel
             week++;
             if (week < 6)
             {
-                for (int k = week; k < 6; k++)
+                for (int k = week; k < 6 && number < 42; k++)
                 {
                     for (i = 1; i <= 7; i++, j++)
                     {
@@ -106,7 +111,7 @@ public class DatesPanel extends JPanel
         }
         else
         {
-            for (int k = 1; k <= weeks; k++)
+            for (int k = 1; k <= weeks && number < 42; k++)
             {
                 for (i = 1; i <= 7; i++, j++)
                 {
@@ -118,9 +123,9 @@ public class DatesPanel extends JPanel
             if (week < 6)
             {
                 j = 1;
-                for (int k = week; k < 6; k++)
+                for (int k = week; k < 6 && number < 42; k++)
                 {
-                    for (i = 1; i <= 7; i++, j++)
+                    for (i = 1; i <= 7 && number < 42; i++, j++)
                     {
                         buttons.get(number).setIcon(new ImageIcon("src/nedelin/gizdov/icons/date/old/" + j + ".png"));
 //                        add(button);
@@ -139,7 +144,7 @@ public class DatesPanel extends JPanel
         prevMonth.setFirstDayOfWeek(Calendar.MONDAY);
         int prevMonthDays = prevMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
         int stamp = prevMonthDays - firstWeekDayCurMonth + weekFirstDay + 1;
-        for (int i = weekFirstDay; (stamp <= prevMonthDays) && (i < firstWeekDayCurMonth); i++, stamp++)
+        for (int i = weekFirstDay; (stamp <= prevMonthDays) && (i < firstWeekDayCurMonth) && number < 42; i++, stamp++)
         {
             buttons.get(number).setIcon(new ImageIcon("src/nedelin/gizdov/icons/date/old/" + stamp + ".png"));
 //            add(buttons.get(number));

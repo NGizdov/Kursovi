@@ -28,7 +28,6 @@ public class Main
     private int month;
     private String[] months = { "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
             "NOVEMBER", "DECEMBER" };
-    private JLabel lblNewLabel;
 
     /**
      * Launch the application.
@@ -81,79 +80,27 @@ public class Main
 
         JMenuBar menuBar = new JMenuBar();
 
-        JPanel bottomPanel = new JPanel();
-
-        mainPanel = new JPanel();
-        GroupLayout groupLayout = new GroupLayout(frmCalendar.getContentPane());
-        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                .addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
-                .addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
-                .addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-                groupLayout.createSequentialGroup()
-                        .addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)));
-
         cal = Calendar.getInstance();
         month = cal.get(Calendar.MONTH);
-        MonthView.fillMainPanel(mainPanel, cal);
+        mainPanel = new Month(cal, null);
+        GroupLayout groupLayout = new GroupLayout(frmCalendar.getContentPane());
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
+                .addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE)
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                    .addContainerGap())
+        );
 
-        bottomPanel.setLayout(new BorderLayout(0, 0));
-
-        lblNewLabel = new JLabel(months[month] + " - " + cal.get(Calendar.YEAR));
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        bottomPanel.add(lblNewLabel, BorderLayout.CENTER);
-
-        JButton previous = new JButton("PREVIOUS");
-        previous.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                mainPanel.removeAll();
-                if (month == 0)
-                {
-                    month = (months.length - 1);
-                    int year = cal.get(Calendar.YEAR);
-                    cal.set(--year, month, 1);
-                    MonthView.fillMainPanel(mainPanel, cal);
-                    lblNewLabel.setText(months[month] + " - " + cal.get(Calendar.YEAR));
-                }
-                else
-                {
-                    cal.set(Calendar.MONTH, --month);
-                    MonthView.fillMainPanel(mainPanel, cal);
-                    lblNewLabel.setText(months[month] + " - " + cal.get(Calendar.YEAR));
-                }
-            }
-        });
-        bottomPanel.add(previous, BorderLayout.WEST);
-
-        JButton next = new JButton("NEXT");
-        next.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                mainPanel.removeAll();
-                if (month == (months.length - 1))
-                {
-                    month = 0;
-                    int year = cal.get(Calendar.YEAR);
-                    cal.set(++year, month, 1);
-                    MonthView.fillMainPanel(mainPanel, cal);
-                    lblNewLabel.setText(months[month] + " - " + cal.get(Calendar.YEAR));
-                }
-                else
-                {
-                    cal.set(Calendar.MONTH, ++month);
-                    MonthView.fillMainPanel(mainPanel, cal);
-                    lblNewLabel.setText(months[month] + " - " + cal.get(Calendar.YEAR));
-                }
-            }
-        });
-        bottomPanel.add(next, BorderLayout.EAST);
+//        cal = Calendar.getInstance();
+//        month = cal.get(Calendar.MONTH);
+//        MonthView.fillMainPanel(mainPanel, cal);
 
         JMenu mnMain = new JMenu("Main");
         menuBar.add(mnMain);

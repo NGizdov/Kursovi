@@ -20,7 +20,7 @@ public class Month extends JPanel
     private String[] months = { "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
             "NOVEMBER", "DECEMBER" };
     private JLabel monthLabel;
-    private JPanel datesPanel;
+    private DatesPanel datesPanel;
     /**
      * Create the panel.
      */
@@ -58,16 +58,17 @@ public class Month extends JPanel
         label_6.setHorizontalAlignment(SwingConstants.CENTER);
         weekDaysPanel.add(label_6);
 
-        datesPanel = new DatesPanel(date);
+//        cal.set(Calendar.MONTH, 4);
+        datesPanel = new DatesPanel(cal);
         datesPanel.setLayout(new GridLayout(6, 7, 3, 3));
         
-        JPanel panel = new JPanel();
+        JPanel bottomPanel = new JPanel();
         GroupLayout gl_mainPanel = new GroupLayout(this);
         gl_mainPanel.setHorizontalGroup(
             gl_mainPanel.createParallelGroup(Alignment.LEADING)
                 .addComponent(weekDaysPanel, GroupLayout.PREFERRED_SIZE, 500, Short.MAX_VALUE)
                 .addComponent(datesPanel, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                .addComponent(panel, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                .addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
         gl_mainPanel.setVerticalGroup(
             gl_mainPanel.createParallelGroup(Alignment.LEADING)
@@ -76,7 +77,7 @@ public class Month extends JPanel
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(datesPanel, GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(panel, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
         );        
         monthLabel = new JLabel("MONTH");
         
@@ -91,13 +92,15 @@ public class Month extends JPanel
                     month = (months.length - 1);
                     int year = cal.get(Calendar.YEAR);
                     cal.set(--year, month, 1);
-                    MonthView.fillMainPanel(datesPanel, cal);
+//                    MonthView.fillMainPanel(datesPanel, cal);
+                    datesPanel.reDrawDates(cal);
                     monthLabel.setText(months[month] + " - " + cal.get(Calendar.YEAR));
                 }
                 else
                 {
                     cal.set(Calendar.MONTH, --month);
-                    MonthView.fillMainPanel(datesPanel, cal);
+//                    MonthView.fillMainPanel(datesPanel, cal);
+                    datesPanel.reDrawDates(cal);
                     monthLabel.setText(months[month] + " - " + cal.get(Calendar.YEAR));
                 }
             }
@@ -114,13 +117,15 @@ public class Month extends JPanel
                     month = 0;
                     int year = cal.get(Calendar.YEAR);
                     cal.set(++year, month, 1);
-                    MonthView.fillMainPanel(datesPanel, cal);
+//                    MonthView.fillMainPanel(datesPanel, cal);
+                    datesPanel.reDrawDates(cal);
                     monthLabel.setText(months[month] + " - " + cal.get(Calendar.YEAR));
                 }
                 else
                 {
                     cal.set(Calendar.MONTH, ++month);
-                    MonthView.fillMainPanel(datesPanel, cal);
+//                    MonthView.fillMainPanel(datesPanel, cal);
+                    datesPanel.reDrawDates(cal);
                     monthLabel.setText(months[month] + " - " + cal.get(Calendar.YEAR));
                 }
             }
@@ -128,28 +133,28 @@ public class Month extends JPanel
         
         
         monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        GroupLayout gl_panel = new GroupLayout(panel);
-        gl_panel.setHorizontalGroup(
-            gl_panel.createParallelGroup(Alignment.LEADING)
-                .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+        GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
+        gl_bottomPanel.setHorizontalGroup(
+            gl_bottomPanel.createParallelGroup(Alignment.LEADING)
+                .addGroup(Alignment.TRAILING, gl_bottomPanel.createSequentialGroup()
                     .addComponent(previousButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(monthLabel, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE))
         );
-        gl_panel.setVerticalGroup(
-            gl_panel.createParallelGroup(Alignment.LEADING)
-                .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-                    .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+        gl_bottomPanel.setVerticalGroup(
+            gl_bottomPanel.createParallelGroup(Alignment.LEADING)
+                .addGroup(Alignment.TRAILING, gl_bottomPanel.createSequentialGroup()
+                    .addGroup(gl_bottomPanel.createParallelGroup(Alignment.BASELINE)
                         .addComponent(previousButton, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                         .addComponent(nextButton, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
-                        .addGroup(gl_panel.createSequentialGroup()
+                        .addGroup(gl_bottomPanel.createSequentialGroup()
                             .addGap(3)
                             .addComponent(monthLabel, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)))
                     .addGap(0))
         );
-        panel.setLayout(gl_panel);
+        bottomPanel.setLayout(gl_bottomPanel);
         setLayout(gl_mainPanel);
 
     }
