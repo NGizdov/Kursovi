@@ -24,10 +24,12 @@ public class Main
 
     private JFrame frmCalendar;
     private JPanel mainPanel;
-    private Calendar cal;
-    private int month;
-    private String[] months = { "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
-            "NOVEMBER", "DECEMBER" };
+	private Calendar cal;
+
+	// private int month;
+	// private String[] months = { "JANUARY", "FEBRUARY", "MARCH", "APRIL",
+	// "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
+	// "NOVEMBER", "DECEMBER" };
 
     /**
      * Launch the application.
@@ -81,7 +83,6 @@ public class Main
         JMenuBar menuBar = new JMenuBar();
 
         cal = Calendar.getInstance();
-        month = cal.get(Calendar.MONTH);
         mainPanel = new Month(cal, null);
         GroupLayout groupLayout = new GroupLayout(frmCalendar.getContentPane());
         groupLayout.setHorizontalGroup(
@@ -97,10 +98,6 @@ public class Main
                     .addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                     .addContainerGap())
         );
-
-//        cal = Calendar.getInstance();
-//        month = cal.get(Calendar.MONTH);
-//        MonthView.fillMainPanel(mainPanel, cal);
 
         JMenu mnMain = new JMenu("Main");
         menuBar.add(mnMain);
