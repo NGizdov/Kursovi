@@ -9,15 +9,15 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenu;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.util.Calendar;
 import java.awt.BorderLayout;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
+
+import nedelin.gizdov.events.DayViewSelect;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -28,14 +28,12 @@ public class Main
 	private Calendar cal;
 	public static JInternalFrame internal;
 	private JPanel month;
-	private static String MONTH_VIEW = "MONTH VIEW";
-	private static String DAY_VIEW = "DAY VIEW";
-
-	// private int month;
-	// private String[] months = { "JANUARY", "FEBRUARY", "MARCH", "APRIL",
-	// "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
-	// "NOVEMBER", "DECEMBER" };
-
+	private static final String MONTH_VIEW = "MONTH VIEW";
+//	private static final String DAY_VIEW = "DAY VIEW";
+	public static final Calendar currentDate = Calendar.getInstance();
+	public static final int currentDay = currentDate.get(Calendar.DATE);
+	public static final int currentMonth = currentDate.get(Calendar.MONTH);
+	public static final int currentYear = currentDate.get(Calendar.YEAR);
     /**
      * Launch the application.
      */
@@ -105,7 +103,7 @@ public class Main
                     .addComponent(internal, GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE))
         );
         
-        month = new Month(cal, internal);
+        month = new Month(currentDate);
         internal.getContentPane().add(month, BorderLayout.CENTER);
         internal.setTitle(MONTH_VIEW);
 
@@ -121,7 +119,7 @@ public class Main
         JMenuItem mntmMonthView = new JMenuItem("Month View");
         mntmMonthView.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                internal.setContentPane(new Month(cal, internal));
+                internal.setContentPane(new Month(cal));
                 internal.setTitle(MONTH_VIEW);
                 internal.invalidate();
                 internal.validate();
@@ -130,14 +128,7 @@ public class Main
         mnView.add(mntmMonthView);
         
         JMenuItem mntmDayView = new JMenuItem("Day View");
-        mntmDayView.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                internal.setContentPane(new DayView(cal));
-                internal.setTitle(DAY_VIEW);
-                internal.invalidate();
-                internal.validate();
-            }
-        });
+        mntmDayView.addActionListener(new DayViewSelect(currentDay, currentMonth, currentYear));
         mnView.add(mntmDayView);
         frmCalendar.getContentPane().setLayout(groupLayout);
     }
