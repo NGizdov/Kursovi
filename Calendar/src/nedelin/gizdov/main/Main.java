@@ -83,7 +83,7 @@ public class Main
         JMenuBar menuBar = new JMenuBar();
 
         cal = Calendar.getInstance();
-        mainPanel = new Month(cal, mainPanel);
+        mainPanel = new Month(cal, frmCalendar);
         GroupLayout groupLayout = new GroupLayout(frmCalendar.getContentPane());
         groupLayout.setHorizontalGroup(
             groupLayout.createParallelGroup(Alignment.LEADING)

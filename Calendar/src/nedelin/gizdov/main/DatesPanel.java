@@ -2,11 +2,14 @@ package nedelin.gizdov.main;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import nedelin.gizdov.events.DayListener;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -18,11 +21,13 @@ public class DatesPanel extends JPanel {
 	// "NOVEMBER", "DECEMBER" };
 	private ArrayList<JButton> buttons;
 	public static int number;
-
+	private JFrame mainFrame;
 	/**
 	 * Create the panel.
+	 * @param frame 
 	 */
-	public DatesPanel(Calendar cal) {
+	public DatesPanel(Calendar cal, JFrame frame) {
+	    mainFrame = frame;
 		number = 0;
 		setLayout(new GridLayout(6, 7, 3, 3));
 		buttons = new ArrayList<JButton>(42);
@@ -52,14 +57,24 @@ public class DatesPanel extends JPanel {
 		fillPrevMonthDays(weekFirstDay, firstDay, date.get(Calendar.MONTH));
 		for (int i = 1; (i <= days) && (number < 42); i++) {
 			buttons.get(number).setIcon(
-					new ImageIcon(getClass().getClassLoader().getResource("src/nedelin/gizdov/icons/date/actual/" + i
-							+ ".png")));
+					new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + i
+							+ ".png"));
+			buttons.get(number).addActionListener(new ActionListener()
+            {                
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    mainFrame.setContentPane(new DayView());  
+                    mainFrame.invalidate();
+                    mainFrame.validate();
+                }
+            });
 			number++;
 		}
 		for (int i = 1; number < 42; i++) {
 			buttons.get(number).setIcon(
-					new ImageIcon(getClass().getClassLoader().getResource("src/nedelin/gizdov/icons/date/old/" + i
-							+ ".png")));
+					new ImageIcon("src/nedelin/gizdov/icons/date/old/" + i
+							+ ".png"));
 			number++;
 		}
 	}
@@ -74,8 +89,8 @@ public class DatesPanel extends JPanel {
 		for (int i = weekFirstDay; (stamp <= prevMonthDays)
 				&& (i < firstWeekDayCurMonth) && number < 42; i++, stamp++) {
 			buttons.get(number).setIcon(
-					new ImageIcon(getClass().getClassLoader().getResource("src/nedelin/gizdov/icons/date/old/" + stamp
-							+ ".png")));
+					new ImageIcon("src/nedelin/gizdov/icons/date/old/" + stamp
+							+ ".png"));
 			number++;
 		}
 	}

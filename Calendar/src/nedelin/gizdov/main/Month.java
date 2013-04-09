@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -24,12 +25,12 @@ public class Month extends JPanel {
 			"DECEMBER" };
 	private JLabel monthLabel;
 	private DatesPanel datesPanel;
-	private JPanel mainPanel;
+	private JFrame mainPanel;
 
 	/**
 	 * Create the panel.
 	 */
-	public Month(Calendar date, JPanel main) {
+	public Month(Calendar date, JFrame main) {
 		mainPanel = main;
 		cal = date;
 		JPanel weekDaysPanel = new JPanel();
@@ -63,7 +64,7 @@ public class Month extends JPanel {
 		label_6.setHorizontalAlignment(SwingConstants.CENTER);
 		weekDaysPanel.add(label_6);
 
-		datesPanel = new DatesPanel(cal);
+		datesPanel = new DatesPanel(cal, mainPanel);
 		datesPanel.setLayout(new GridLayout(6, 7, 3, 3));
 
 		JPanel bottomPanel = new JPanel();
