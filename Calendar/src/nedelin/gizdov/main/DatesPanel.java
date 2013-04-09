@@ -2,7 +2,7 @@ package nedelin.gizdov.main;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
 import nedelin.gizdov.events.DayListener;
@@ -21,13 +21,13 @@ public class DatesPanel extends JPanel {
 	// "NOVEMBER", "DECEMBER" };
 	private ArrayList<JButton> buttons;
 	public static int number;
-	private JFrame mainFrame;
+	private JInternalFrame mainFrame;
 	/**
 	 * Create the panel.
-	 * @param frame 
+	 * @param mainPanel 
 	 */
-	public DatesPanel(Calendar cal, JFrame frame) {
-	    mainFrame = frame;
+	public DatesPanel(Calendar cal, JInternalFrame mainPanel) {
+	    mainFrame = mainPanel;
 		number = 0;
 		setLayout(new GridLayout(6, 7, 3, 3));
 		buttons = new ArrayList<JButton>(42);
@@ -64,9 +64,10 @@ public class DatesPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    mainFrame.setContentPane(new DayView());  
-                    mainFrame.invalidate();
-                    mainFrame.validate();
+                    Main.internal.setContentPane(new DayView(date));  
+                    Main.internal.setTitle("DAY VIEW");
+                    Main.internal.invalidate();
+                    Main.internal.validate();
                 }
             });
 			number++;

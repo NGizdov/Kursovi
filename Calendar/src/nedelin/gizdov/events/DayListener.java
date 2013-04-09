@@ -16,7 +16,7 @@ public class DayListener implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		mainPanlel = new DayView();
+//		mainPanlel = new DayView();
 	}
 
 }
