@@ -12,9 +12,12 @@ import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.JButton;
 
-import java.awt.Dimension;
+import nedelin.gizdov.events.DayViewAction;
+import nedelin.gizdov.events.NextDay;
 
-import nedelin.gizdov.events.DayViewSelect;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class DayView extends JPanel
 {
@@ -24,6 +27,7 @@ public class DayView extends JPanel
 	 */
     private static final long serialVersionUID = 1L;
     private JTable table;
+    private JLabel dayLabel;
     private Calendar date;
     private int day;
     private int month;
@@ -47,6 +51,7 @@ public class DayView extends JPanel
         this.month = month;
         this.year = year;
         date.set(this.year, this.month, this.day);
+        Main.cal = date;
         date.setFirstDayOfWeek(Calendar.MONDAY);
         int weekFirstDay = date.getFirstDayOfWeek();
         int theDay = date.get(Calendar.DAY_OF_WEEK);
@@ -64,13 +69,15 @@ public class DayView extends JPanel
         JPanel bottomPanel = new JPanel();
 
         JButton previousButton = new JButton("PREVIOUS");
-        previousButton.addActionListener(new DayViewSelect(date, DayViewSelect.PREVIOUS));
+//        previousButton.addActionListener(new PreviousDay(date));
+        previousButton.addActionListener(new DayViewAction(day - 1, month, year));
 
-        JLabel dayLabel = new JLabel(weekDays[weekDay] + "    " + day + "-" + (month + 1) + "-" + year);
+        dayLabel = new JLabel(weekDays[weekDay] + "    " + day + "-" + (month + 1) + "-" + year);
         dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         JButton nextButton = new JButton("NEXT");
-        nextButton.addActionListener(new DayViewSelect(date, DayViewSelect.NEXT));
+//        nextButton.addActionListener(new NextDay(date));
+        nextButton.addActionListener(new NextDay(day + 1, month, year));
         GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
         gl_bottomPanel.setHorizontalGroup(gl_bottomPanel.createParallelGroup(Alignment.TRAILING).addGroup(
                 gl_bottomPanel.createSequentialGroup()

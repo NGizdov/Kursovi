@@ -4,9 +4,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import nedelin.gizdov.events.DayViewSelect;
+import nedelin.gizdov.events.DayViewAction;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -68,17 +70,17 @@ public class DatesPanel extends JPanel
         if (isCurrentMonth(cal))
         {
             for (int i = 1; (i <= days) && (number < 42); i++)
-            {
+            {                
                 if (isToday(i))
                 {
                     buttons.get(number).setIcon(new ImageIcon("src/nedelin/gizdov/icons/date/current/" + i + ".png"));
-                    buttons.get(number).addActionListener(new DayViewSelect(i, month, year));
+                    buttons.get(number).addActionListener(new DayViewAction(i, month, year));
                     number++;
                 }
                 else
                 {
                     buttons.get(number).setIcon(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + i + ".png"));
-                    buttons.get(number).addActionListener(new DayViewSelect(i, month, year));
+                    buttons.get(number).addActionListener(new DayViewAction(i, month, year));
                     number++;
                 }
             }
@@ -88,7 +90,7 @@ public class DatesPanel extends JPanel
             for (int i = 1; (i <= days) && (number < 42); i++)
             {
                 buttons.get(number).setIcon(new ImageIcon("src/nedelin/gizdov/icons/date/actual/" + i + ".png"));
-                buttons.get(number).addActionListener(new DayViewSelect(i, month, year));
+                buttons.get(number).addActionListener(new DayViewAction(i, month, year));
                 number++;
             }
         }
@@ -102,14 +104,14 @@ public class DatesPanel extends JPanel
 
     private boolean isToday(int day)
     {
-        if (Main.currentDay == day)
+        if (Main.todayDay == day)
             return true;
         return false;
     }
 
     private boolean isCurrentMonth(Calendar date)
     {
-        if ((Main.currentMonth == date.get(Calendar.MONTH)) && (Main.currentYear == date.get(Calendar.YEAR)))
+        if ((Main.todayMonth == date.get(Calendar.MONTH)) && (Main.todayYear == date.get(Calendar.YEAR)))
             return true;
         return false;
     }
