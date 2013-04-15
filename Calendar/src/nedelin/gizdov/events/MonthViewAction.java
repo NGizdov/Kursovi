@@ -19,6 +19,8 @@ public class MonthViewAction implements ActionListener
     {
         Main.internal.setContentPane(new Month(cal));
         Main.internal.setTitle("MONTH VIEW");
+        Main.frmCalendar.invalidate();
+        Main.frmCalendar.validate();
         Main.internal.invalidate();
         Main.internal.validate();
     }

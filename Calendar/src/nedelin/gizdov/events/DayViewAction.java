@@ -24,7 +24,10 @@ public class DayViewAction implements ActionListener
     {
         Main.internal.setContentPane(new DayView(day, month, year));
         Main.internal.setTitle("DAY VIEW");
+        Main.frmCalendar.invalidate();
+        Main.frmCalendar.validate();
         Main.internal.invalidate();
         Main.internal.validate();
+        
     }
 }

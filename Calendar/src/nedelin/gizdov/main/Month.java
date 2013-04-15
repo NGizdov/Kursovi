@@ -32,6 +32,7 @@ public class Month extends JPanel
      */
     public Month(Calendar date)
     {
+        Main.cal = date;
         cal = date;
         Main.cal = cal;
         JPanel weekDaysPanel = new JPanel();

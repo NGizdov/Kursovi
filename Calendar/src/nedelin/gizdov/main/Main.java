@@ -22,7 +22,7 @@ import nedelin.gizdov.events.MonthViewAction;
 public class Main
 {
 
-    private JFrame frmCalendar;
+    public static JFrame frmCalendar;
     private JPanel monthPanel;
     public static Calendar cal;
     public static JInternalFrame internal;    

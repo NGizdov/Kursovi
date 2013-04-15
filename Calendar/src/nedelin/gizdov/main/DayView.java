@@ -50,6 +50,9 @@ public class DayView extends JPanel
         this.day = day;
         this.month = month;
         this.year = year;
+        Main.currentDay = this.day;
+        Main.currentMonth = this.month;
+        Main.currentYear = this.year;
         date.set(this.year, this.month, this.day);
         Main.cal = date;
         date.setFirstDayOfWeek(Calendar.MONDAY);
