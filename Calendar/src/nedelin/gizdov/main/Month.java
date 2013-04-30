@@ -32,9 +32,9 @@ public class Month extends JPanel
      */
     public Month(Calendar date)
     {
-        Main.cal = date;
+        Main.currentCal = date;
         cal = date;
-        Main.cal = cal;
+        Main.currentCal = cal;
         JPanel weekDaysPanel = new JPanel();
         weekDaysPanel.setLayout(new GridLayout(1, 7, 3, 3));
 
@@ -87,10 +87,10 @@ public class Month extends JPanel
         monthLabel = new JLabel(months[month] + " - " + cal.get(Calendar.YEAR));
 
         JButton previousButton = new JButton("PREVIOUS");
-        previousButton.addActionListener(new PrevMonth(cal, datesPanel, monthLabel));
+        previousButton.addActionListener(new PrevMonth(Main.currentCal));
 
         JButton nextButton = new JButton("NEXT");
-        nextButton.addActionListener(new NextMonth(cal, datesPanel, monthLabel));
+        nextButton.addActionListener(new NextMonth(Main.currentCal));
 
         monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
         GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);

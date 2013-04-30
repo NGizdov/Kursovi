@@ -24,7 +24,7 @@ public class Main
 
     public static JFrame frmCalendar;
     private JPanel monthPanel;
-    public static Calendar cal;
+    public static Calendar currentCal;
     public static JInternalFrame internal;    
     public static final Calendar todayDate = Calendar.getInstance();
     public static final int todayDay = todayDate.get(Calendar.DATE);
@@ -89,7 +89,7 @@ public class Main
 
         JMenuBar menuBar = new JMenuBar();
 
-        cal = Calendar.getInstance();
+        currentCal = Calendar.getInstance();
 
         internal = new JInternalFrame("New JInternalFrame");
         internal.setVisible(true);
@@ -117,7 +117,7 @@ public class Main
         menuBar.add(mnView);
 
         JMenuItem mntmMonthView = new JMenuItem("Month View");
-        mntmMonthView.addActionListener(new MonthViewAction(cal));
+        mntmMonthView.addActionListener(new MonthViewAction(currentCal));
         mnView.add(mntmMonthView);
 
         JMenuItem mntmDayView = new JMenuItem("Day View");

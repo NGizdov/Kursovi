@@ -42,19 +42,22 @@ public class DayView extends JPanel
     /**
      * Create the panel.
      * 
-     * @param cal
+     * @param currentCal
      */
     public DayView(int day, int month, int year)
     {
+    	Main.currentDay = day;
+        Main.currentMonth = month;
+        Main.currentYear = year;
         date = Calendar.getInstance();
-        this.day = day;
-        this.month = month;
-        this.year = year;
-        Main.currentDay = this.day;
-        Main.currentMonth = this.month;
-        Main.currentYear = this.year;
-        date.set(this.year, this.month, this.day);
-        Main.cal = date;
+//        this.day = day;
+//        this.month = month;
+//        this.year = year;
+//        Main.currentDay = this.day;
+//        Main.currentMonth = this.month;
+//        Main.currentYear = this.year;
+        date.set(Main.currentDay, Main.currentMonth, Main.currentYear);
+        Main.currentCal = date;
         date.setFirstDayOfWeek(Calendar.MONDAY);
         int weekFirstDay = date.getFirstDayOfWeek();
         int theDay = date.get(Calendar.DAY_OF_WEEK);
@@ -73,14 +76,14 @@ public class DayView extends JPanel
 
         JButton previousButton = new JButton("PREVIOUS");
 //        previousButton.addActionListener(new PreviousDay(date));
-        previousButton.addActionListener(new DayViewAction(day - 1, month, year));
+//        previousButton.addActionListener(new DayViewAction(day - 1, month, year));
 
         dayLabel = new JLabel(weekDays[weekDay] + "    " + day + "-" + (month + 1) + "-" + year);
         dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         JButton nextButton = new JButton("NEXT");
 //        nextButton.addActionListener(new NextDay(date));
-        nextButton.addActionListener(new NextDay(day + 1, month, year));
+//        nextButton.addActionListener(new NextDay(date));
         GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
         gl_bottomPanel.setHorizontalGroup(gl_bottomPanel.createParallelGroup(Alignment.TRAILING).addGroup(
                 gl_bottomPanel.createSequentialGroup()

@@ -4,23 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 
-import javax.swing.JLabel;
-
-import nedelin.gizdov.main.DatesPanel;
+import nedelin.gizdov.main.Main;
+import nedelin.gizdov.main.Month;
 
 public class PrevMonth implements ActionListener
 {
     private Calendar date;
     private String[] months = { "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
             "NOVEMBER", "DECEMBER" };
-    private DatesPanel datesPanel;
-    private JLabel monthLabel;
 
-    public PrevMonth(Calendar cal, DatesPanel panel, JLabel label)
+    public PrevMonth(Calendar cal)
     {
         this.date = cal;
-        this.datesPanel = panel;
-        this.monthLabel = label;
     }
 
     @Override
@@ -31,15 +26,33 @@ public class PrevMonth implements ActionListener
         {
             month = (months.length - 1);
             int year = date.get(Calendar.YEAR);
-            date.set(--year, month, 1);
-            datesPanel.redrawDates(date);
-            monthLabel.setText(months[month] + " - " + date.get(Calendar.YEAR));
+            year--;
+            Main.currentYear = year;
+            Main.currentDay = date.get(Calendar.DATE);
+            Main.currentMonth = month;
+            date.set(year, month, 1);
+            Main.currentCal = date;
+            Main.internal.setContentPane(new Month(date));
+            Main.internal.setTitle("MONTH VIEW");
+            Main.frmCalendar.invalidate();
+            Main.frmCalendar.validate();
+            Main.internal.invalidate();
+            Main.internal.validate();
         }
         else
         {
-            date.set(Calendar.MONTH, --month);
-            datesPanel.redrawDates(date);
-            monthLabel.setText(months[month] + " - " + date.get(Calendar.YEAR));
+        	month--;
+        	Main.currentYear = date.get(Calendar.YEAR);
+            Main.currentDay = 1;
+            Main.currentMonth = month;
+            date.set(Calendar.MONTH, month);
+            Main.currentCal.set(Main.currentYear, month, Main.currentDay);
+            Main.internal.setContentPane(new Month(date));
+            Main.internal.setTitle("MONTH VIEW");
+            Main.frmCalendar.invalidate();
+            Main.frmCalendar.validate();
+            Main.internal.invalidate();
+            Main.internal.validate();
         }
     }
 }
