@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.Calendar;
 
 import nedelin.gizdov.main.Main;
-import nedelin.gizdov.main.Month;
+import nedelin.gizdov.main.MonthView;
 
 public class PrevMonth implements ActionListener
 {
@@ -32,7 +32,7 @@ public class PrevMonth implements ActionListener
             Main.currentMonth = month;
             date.set(year, month, 1);
             Main.currentCal = date;
-            Main.internal.setContentPane(new Month(date));
+            Main.internal.setContentPane(new MonthView(date));
             Main.internal.setTitle("MONTH VIEW");
             Main.frmCalendar.invalidate();
             Main.frmCalendar.validate();
@@ -47,7 +47,7 @@ public class PrevMonth implements ActionListener
             Main.currentMonth = month;
             date.set(Calendar.MONTH, month);
             Main.currentCal.set(Main.currentYear, month, Main.currentDay);
-            Main.internal.setContentPane(new Month(date));
+            Main.internal.setContentPane(new MonthView(date));
             Main.internal.setTitle("MONTH VIEW");
             Main.frmCalendar.invalidate();
             Main.frmCalendar.validate();

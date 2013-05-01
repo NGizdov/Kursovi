@@ -1,21 +1,34 @@
 package nedelin.gizdov.main;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import nedelin.gizdov.utils.Utils;
-
 import java.awt.GridLayout;
 import java.util.Calendar;
 
-public class MonthView
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.GroupLayout;
+import javax.swing.SwingConstants;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+
+import nedelin.gizdov.events.NextMonth;
+import nedelin.gizdov.events.PrevMonth;
+
+public class MonthView extends JPanel
 {
-    public static void fillMainPanel(JPanel mainPanel, Calendar cal)
+    private static final long serialVersionUID = 6569662857367687940L;
+    private Calendar cal;
+    private int month;
+    private String[] months = { "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
+            "NOVEMBER", "DECEMBER" };
+    private JLabel monthLabel;
+    private DatesPanel datesPanel;
+
+    public MonthView(Calendar date)
     {
+        Main.currentCal = date;
+        cal = date;
+        Main.currentCal = cal;
         JPanel weekDaysPanel = new JPanel();
         weekDaysPanel.setLayout(new GridLayout(1, 7, 3, 3));
 
@@ -47,19 +60,56 @@ public class MonthView
         label_6.setHorizontalAlignment(SwingConstants.CENTER);
         weekDaysPanel.add(label_6);
 
-        JPanel monthDaysPanel = new JPanel();
-        monthDaysPanel.setLayout(new GridLayout(0, 7, 3, 3));
-        GroupLayout gl_mainPanel = new GroupLayout(mainPanel);
+        datesPanel = new DatesPanel(cal);
+        datesPanel.setLayout(new GridLayout(6, 7, 3, 3));
+
+        JPanel bottomPanel = new JPanel();
+        GroupLayout gl_mainPanel = new GroupLayout(this);
         gl_mainPanel.setHorizontalGroup(gl_mainPanel.createParallelGroup(Alignment.LEADING)
-                .addComponent(monthDaysPanel, GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
-                .addComponent(weekDaysPanel, GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE));
+                .addComponent(datesPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(weekDaysPanel, GroupLayout.PREFERRED_SIZE, 507, Short.MAX_VALUE)
+                .addComponent(bottomPanel, GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE));
         gl_mainPanel.setVerticalGroup(gl_mainPanel.createParallelGroup(Alignment.LEADING).addGroup(
                 gl_mainPanel.createSequentialGroup()
                         .addComponent(weekDaysPanel, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(monthDaysPanel, GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)));
-        mainPanel.setLayout(gl_mainPanel);
-        Utils.drawMonth(monthDaysPanel, cal);
-    }
+                        .addComponent(datesPanel, GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addComponent(bottomPanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)));
+        month = cal.get(Calendar.MONTH);
 
+        monthLabel = new JLabel(months[month] + " - " + cal.get(Calendar.YEAR));
+
+        JButton previousButton = new JButton("PREVIOUS");
+        previousButton.addActionListener(new PrevMonth(Main.currentCal));
+
+        JButton nextButton = new JButton("NEXT");
+        nextButton.addActionListener(new NextMonth(Main.currentCal));
+
+        monthLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        GroupLayout gl_bottomPanel = new GroupLayout(bottomPanel);
+        gl_bottomPanel.setHorizontalGroup(gl_bottomPanel.createParallelGroup(Alignment.TRAILING).addGroup(
+                gl_bottomPanel.createSequentialGroup()
+                        .addComponent(previousButton, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(monthLabel, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)));
+        gl_bottomPanel.setVerticalGroup(gl_bottomPanel.createParallelGroup(Alignment.TRAILING).addGroup(
+                gl_bottomPanel
+                        .createSequentialGroup()
+                        .addGroup(
+                                gl_bottomPanel
+                                        .createParallelGroup(Alignment.TRAILING)
+                                        .addComponent(monthLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                                        .addGroup(
+                                                gl_bottomPanel
+                                                        .createParallelGroup(Alignment.BASELINE)
+                                                        .addComponent(previousButton, GroupLayout.PREFERRED_SIZE, 20,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(nextButton, GroupLayout.PREFERRED_SIZE, 20,
+                                                                GroupLayout.PREFERRED_SIZE))).addGap(0)));
+        bottomPanel.setLayout(gl_bottomPanel);
+        setLayout(gl_mainPanel);
+    }
 }

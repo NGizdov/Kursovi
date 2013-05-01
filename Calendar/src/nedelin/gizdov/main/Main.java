@@ -13,18 +13,12 @@ import javax.swing.JPanel;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.awt.BorderLayout;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.ByteBuffer;
+import java.io.InputStreamReader;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
@@ -60,7 +54,8 @@ public class Main {
 			public void run() {
 				try {
 					Main window = new Main();
-					window.frmCalendar.setVisible(true);
+					window.initialize();
+					frmCalendar.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -68,16 +63,6 @@ public class Main {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public Main() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		currentDay = todayDay;
 		currentMonth = todayMonth;
@@ -113,7 +98,7 @@ public class Main {
 						.addComponent(internal, GroupLayout.DEFAULT_SIZE, 553,
 								Short.MAX_VALUE)));
 
-		monthPanel = new Month(todayDate);
+		monthPanel = new MonthView(todayDate);
 		internal.getContentPane().add(monthPanel, BorderLayout.CENTER);
 		internal.setTitle("MONTH VIEW");
 
@@ -131,8 +116,7 @@ public class Main {
 		mnView.add(mntmMonthView);
 
 		JMenuItem mntmDayView = new JMenuItem("Day View");
-		mntmDayView.addActionListener(new DayViewAction(currentDay,
-				currentMonth, currentYear));
+		mntmDayView.addActionListener(new DayViewAction());
 		mnView.add(mntmDayView);
 		frmCalendar.getContentPane().setLayout(groupLayout);
 	}
@@ -141,7 +125,8 @@ public class Main {
 		tasks = new HashMap<String, Map<String, String>>();
 		BufferedReader fr = null;
 		try {
-			fr = new BufferedReader(new FileReader("tasks"));
+//			fr = new BufferedReader(new FileReader("./tasks"));
+			fr = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("tasks")));
 			String line = null;
 			while ((line = fr.readLine()) != null) {
 				Map<String, String> taskByHours = null;

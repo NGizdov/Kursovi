@@ -7,28 +7,19 @@ import javax.swing.JPanel;
 import nedelin.gizdov.events.ThisDayAction;
 
 import java.awt.GridLayout;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class DatesPanel extends JPanel {
-	/**
-     * 
-     */
+
 	private static final long serialVersionUID = 5920242753952594968L;
 	private Calendar date;
 	private int month;
 	private int year;
-	// private String[] months = { "JANUARY", "FEBRUARY", "MARCH", "APRIL",
-	// "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER",
-	// "NOVEMBER", "DECEMBER" };
 	private ArrayList<JButton> buttons;
 	public static int number;
 
-	/**
-	 * Create the panel.
-	 * 
-	 * @param mainPanel
-	 */
 	public DatesPanel(Calendar cal) {
 		number = 0;
 		setLayout(new GridLayout(6, 7, 3, 3));
@@ -62,24 +53,44 @@ public class DatesPanel extends JPanel {
 		if (isCurrentMonth(cal)) {
 			for (int i = 1; (i <= days) && (number < 42); i++) {
 				if (isToday(i)) {
-					buttons.get(number).setIcon(
-							new ImageIcon(
-									"src/nedelin/gizdov/icons/date/current/"
-											+ i + ".png"));
+//					buttons.get(number).setIcon(
+//							new ImageIcon(
+//									"src/nedelin/gizdov/icons/date/current/"
+//											+ i + ".png"));
+					
+						try {
+							buttons.get(number).setIcon(
+									new ImageIcon(getClass().getClassLoader().getResource("date/current/" + i + ".png").toURI().getPath()));
+						} catch (URISyntaxException e) {
+							e.printStackTrace();
+						}
+					
 					buttons.get(number).addActionListener(
 							new ThisDayAction(i, this.month, this.year));
 					number++;
 				} else {
 					if (containsTasks(i + "/" + month + "/" + year)) {
-						buttons.get(number).setIcon(
-								new ImageIcon(
-										"src/nedelin/gizdov/icons/date/tasks/"
-												+ i + ".png"));
+//						buttons.get(number).setIcon(
+//								new ImageIcon(
+//										"src/nedelin/gizdov/icons/date/tasks/"
+//												+ i + ".png"));
+						try {
+							buttons.get(number).setIcon(
+									new ImageIcon(getClass().getClassLoader().getResource("date/tasks/" + i + ".png").toURI().getPath()));
+						} catch (URISyntaxException e) {
+							e.printStackTrace();
+						}
 					} else {
-						buttons.get(number).setIcon(
-								new ImageIcon(
-										"src/nedelin/gizdov/icons/date/actual/"
-												+ i + ".png"));
+//						buttons.get(number).setIcon(
+//								new ImageIcon(
+//										"src/nedelin/gizdov/icons/date/actual/"
+//												+ i + ".png"));
+						try {
+							buttons.get(number).setIcon(
+									new ImageIcon(getClass().getClassLoader().getResource("date/actual/" + i + ".png").toURI().getPath()));
+						} catch (URISyntaxException e) {
+							e.printStackTrace();
+						}
 					}
 					buttons.get(number).addActionListener(
 							new ThisDayAction(i, month, year));
@@ -89,15 +100,27 @@ public class DatesPanel extends JPanel {
 		} else {
 			for (int i = 1; (i <= days) && (number < 42); i++) {
 				if (containsTasks(i + "/" + month + "/" + year)) {
-					buttons.get(number).setIcon(
-							new ImageIcon(
-									"src/nedelin/gizdov/icons/date/tasks/"
-											+ i + ".png"));
+//					buttons.get(number).setIcon(
+//							new ImageIcon(
+//									"src/nedelin/gizdov/icons/date/tasks/"
+//											+ i + ".png"));
+					try {
+						buttons.get(number).setIcon(
+								new ImageIcon(getClass().getClassLoader().getResource("date/tasks/" + i + ".png").toURI().getPath()));
+					} catch (URISyntaxException e) {
+						e.printStackTrace();
+					}
 				} else {
-					buttons.get(number).setIcon(
-							new ImageIcon(
-									"src/nedelin/gizdov/icons/date/actual/" + i
-											+ ".png"));
+//					buttons.get(number).setIcon(
+//							new ImageIcon(
+//									"src/nedelin/gizdov/icons/date/actual/" + i
+//											+ ".png"));
+					try {
+						buttons.get(number).setIcon(
+								new ImageIcon(getClass().getClassLoader().getResource("date/actual/" + i + ".png").toURI().getPath()));
+					} catch (URISyntaxException e) {
+						e.printStackTrace();
+					}
 				}
 				buttons.get(number).addActionListener(
 						new ThisDayAction(i, month, year));
@@ -105,9 +128,15 @@ public class DatesPanel extends JPanel {
 			}
 		}
 		for (int i = 1; number < 42; i++) {
-			buttons.get(number).setIcon(
-					new ImageIcon("src/nedelin/gizdov/icons/date/old/" + i
-							+ ".png"));
+//			buttons.get(number).setIcon(
+//					new ImageIcon("src/nedelin/gizdov/icons/date/old/" + i
+//							+ ".png"));
+			try {
+				buttons.get(number).setIcon(
+						new ImageIcon(getClass().getClassLoader().getResource("date/old/" + i + ".png").toURI().getPath()));
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
 			buttons.get(number).setSelected(false);
 			number++;
 		}
@@ -139,9 +168,15 @@ public class DatesPanel extends JPanel {
 		int stamp = prevMonthDays - firstWeekDayCurMonth + weekFirstDay + 1;
 		for (int i = weekFirstDay; (stamp <= prevMonthDays)
 				&& (i < firstWeekDayCurMonth) && number < 42; i++, stamp++) {
-			buttons.get(number).setIcon(
-					new ImageIcon("src/nedelin/gizdov/icons/date/old/" + stamp
-							+ ".png"));
+//			buttons.get(number).setIcon(
+//					new ImageIcon("src/nedelin/gizdov/icons/date/old/" + stamp
+//							+ ".png"));
+			try {
+				buttons.get(number).setIcon(
+						new ImageIcon(getClass().getClassLoader().getResource("date/old/" + i + ".png").toURI().getPath()));
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
 			buttons.get(number).setSelected(false);
 			number++;
 		}
