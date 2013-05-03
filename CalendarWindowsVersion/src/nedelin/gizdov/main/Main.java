@@ -1,30 +1,34 @@
 package nedelin.gizdov.main;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.JMenuBar;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JMenu;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JPanel;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.UIManager;
 
 import nedelin.gizdov.events.DayViewAction;
+import nedelin.gizdov.events.ExitListener;
 import nedelin.gizdov.events.MonthViewAction;
 
 public class Main {
@@ -41,6 +45,8 @@ public class Main {
 	public static int currentMonth;
 	public static int currentYear;
 	public static Map<String, Map<String, String>> tasks;
+
+	private TrayIcon trayIcon;
 
 	/**
 	 * Launch the application.
@@ -69,11 +75,17 @@ public class Main {
 		currentMonth = todayMonth;
 		currentYear = todayYear;
 		frmCalendar = new JFrame();
+		Image icon = new ImageIcon(getClass().getClassLoader().getResource(
+				"dateoldcopy/current/" + currentDay + ".png")).getImage();
+		frmCalendar.setIconImage(icon);
 		frmCalendar.setResizable(true);
 		frmCalendar.setTitle("CALENDAR");
 		frmCalendar.setBounds(100, 100, 550, 430);
-		frmCalendar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// frmCalendar.setExtendedState(JFrame.ICONIFIED);
+		frmCalendar.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		loadTasks();
+
+		setSistemTray();
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -106,6 +118,10 @@ public class Main {
 		JMenu mnMain = new JMenu("Main");
 		menuBar.add(mnMain);
 
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ExitListener());
+		mnMain.add(mntmExit);
+
 		JMenu mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);
 
@@ -122,12 +138,28 @@ public class Main {
 		frmCalendar.getContentPane().setLayout(groupLayout);
 	}
 
+	private void setSistemTray() {
+		if (SystemTray.isSupported()) {
+			// SystemTray tray = SystemTray.getSystemTray();
+			Image icon = new ImageIcon(
+					getClass().getClassLoader().getResource(
+							"date/current/" + currentDay + ".png"))
+					.getImage();
+			trayIcon = new TrayIcon(icon, "Calendar");
+			trayIcon.setImageAutoSize(true);
+			frmCalendar.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent windowEvent) {
+					frmCalendar.setExtendedState(JFrame.ICONIFIED);
+				}
+			});
+		}
+	}
+
 	private void loadTasks() {
 		tasks = new HashMap<String, Map<String, String>>();
 		BufferedReader fr = null;
 		try {
 			fr = new BufferedReader(new FileReader("tasks"));
-//			fr = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("tasks")));
 			String line = null;
 			while ((line = fr.readLine()) != null) {
 				Map<String, String> taskByHours = null;

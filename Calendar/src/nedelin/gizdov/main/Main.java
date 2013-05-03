@@ -1,15 +1,12 @@
 package nedelin.gizdov.main;
 
-import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.SystemTray;
-import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,6 +17,7 @@ import java.util.Map;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
@@ -49,7 +47,6 @@ public class Main {
 	public static Map<String, Map<String, String>> tasks;
 
 	private TrayIcon trayIcon;
-	private SystemTray tray;
 
 	/**
 	 * Launch the application.
@@ -78,6 +75,9 @@ public class Main {
 		currentMonth = todayMonth;
 		currentYear = todayYear;
 		frmCalendar = new JFrame();
+		Image icon = new ImageIcon(getClass().getClassLoader().getResource(
+				"dateoldcopy/current/" + currentDay + ".png")).getImage();
+		frmCalendar.setIconImage(icon);
 		frmCalendar.setResizable(true);
 		frmCalendar.setTitle("CALENDAR");
 		frmCalendar.setBounds(100, 100, 510, 435);
@@ -140,9 +140,11 @@ public class Main {
 
 	private void setSistemTray() {
 		if (SystemTray.isSupported()) {
-			tray = SystemTray.getSystemTray();
-			Image icon = Toolkit.getDefaultToolkit().getImage(
-					"date/current/" + todayDay + ".png");
+			// SystemTray tray = SystemTray.getSystemTray();
+			Image icon = new ImageIcon(
+					getClass().getClassLoader().getResource(
+							"date/current/" + currentDay + ".png"))
+					.getImage();
 			trayIcon = new TrayIcon(icon, "Calendar");
 			trayIcon.setImageAutoSize(true);
 			frmCalendar.addWindowListener(new WindowAdapter() {
@@ -151,47 +153,6 @@ public class Main {
 				}
 			});
 		}
-//		frmCalendar.addWindowStateListener(new WindowStateListener() {
-//			public void windowStateChanged(WindowEvent e) {
-//				if (e.getNewState() == JFrame.ICONIFIED) {
-//					try {
-//						tray.add(trayIcon);
-//						frmCalendar.setVisible(false);
-////						System.out.println("added to SystemTray");
-//					} catch (AWTException ex) {
-////						System.out.println("unable to add to tray");
-//					}
-//				}
-//				if (e.getNewState() == WindowEvent.WINDOW_CLOSING) {
-//					try {
-//						tray.add(trayIcon);
-//						frmCalendar.setVisible(false);
-////						System.out.println("added to SystemTray");
-//					} catch (AWTException ex) {
-////						System.out.println("unable to add to system tray");
-//					}
-//				}
-//				if (e.getNewState() == 7) {
-//					try {
-//						tray.add(trayIcon);
-//						frmCalendar.setVisible(false);
-////						System.out.println("added to SystemTray");
-//					} catch (AWTException ex) {
-////						System.out.println("unable to add to system tray");
-//					}
-//				}
-//				if (e.getNewState() == JFrame.MAXIMIZED_BOTH) {
-//					tray.remove(trayIcon);
-//					frmCalendar.setVisible(true);
-////					System.out.println("Tray icon removed");
-//				}
-//				if (e.getNewState() == JFrame.NORMAL) {
-//					tray.remove(trayIcon);
-//					frmCalendar.setVisible(true);
-////					System.out.println("Tray icon removed");
-//				}
-//			}
-//		});
 	}
 
 	private void loadTasks() {
