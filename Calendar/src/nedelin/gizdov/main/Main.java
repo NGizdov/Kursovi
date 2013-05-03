@@ -71,7 +71,7 @@ public class Main {
 		frmCalendar = new JFrame();
 		frmCalendar.setResizable(true);
 		frmCalendar.setTitle("CALENDAR");
-		frmCalendar.setBounds(100, 100, 550, 430);
+		frmCalendar.setBounds(100, 100, 666, 676);
 		frmCalendar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		loadTasks();
 
