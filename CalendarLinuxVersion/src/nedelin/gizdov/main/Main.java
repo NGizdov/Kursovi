@@ -80,7 +80,7 @@ public class Main {
 		frmCalendar.setIconImage(icon);
 		frmCalendar.setResizable(true);
 		frmCalendar.setTitle("CALENDAR");
-		frmCalendar.setBounds(100, 100, 550, 430);
+		frmCalendar.setBounds(100, 100, 510, 435);
 		// frmCalendar.setExtendedState(JFrame.ICONIFIED);
 		frmCalendar.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		loadTasks();
