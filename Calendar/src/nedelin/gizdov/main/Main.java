@@ -17,6 +17,7 @@ import java.util.Map;
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -70,7 +71,7 @@ public class Main {
 		frmCalendar = new JFrame();
 		frmCalendar.setResizable(true);
 		frmCalendar.setTitle("CALENDAR");
-		frmCalendar.setBounds(100, 100, 666, 676);
+		frmCalendar.setBounds(100, 100, 550, 430);
 		frmCalendar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		loadTasks();
 
@@ -125,8 +126,8 @@ public class Main {
 		tasks = new HashMap<String, Map<String, String>>();
 		BufferedReader fr = null;
 		try {
-//			fr = new BufferedReader(new FileReader("./tasks"));
-			fr = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("tasks")));
+			fr = new BufferedReader(new FileReader("tasks"));
+//			fr = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("tasks")));
 			String line = null;
 			while ((line = fr.readLine()) != null) {
 				Map<String, String> taskByHours = null;

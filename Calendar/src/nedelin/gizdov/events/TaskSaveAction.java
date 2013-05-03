@@ -23,9 +23,9 @@ public class TaskSaveAction implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Writer writer = null;
-		String path = getClass().getClassLoader().getResource("tasks").getPath();
+//		String path = getClass().getClassLoader().getResource("tasks").getPath();
 		try {
-			writer = new FileWriter(path, true);
+			writer = new FileWriter("tasks", true);
 			String date = Main.currentDay + "/" + Main.currentMonth + "/"
 					+ Main.currentYear;
 			Map<String, String> tasksByHours = new HashMap<String, String>();
