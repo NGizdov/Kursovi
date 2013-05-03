@@ -1,30 +1,36 @@
 package nedelin.gizdov.main;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.JMenuBar;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JMenu;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JPanel;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.UIManager;
 
 import nedelin.gizdov.events.DayViewAction;
+import nedelin.gizdov.events.ExitListener;
 import nedelin.gizdov.events.MonthViewAction;
 
 public class Main {
@@ -41,6 +47,9 @@ public class Main {
 	public static int currentMonth;
 	public static int currentYear;
 	public static Map<String, Map<String, String>> tasks;
+
+	private TrayIcon trayIcon;
+	private SystemTray tray;
 
 	/**
 	 * Launch the application.
@@ -71,9 +80,12 @@ public class Main {
 		frmCalendar = new JFrame();
 		frmCalendar.setResizable(true);
 		frmCalendar.setTitle("CALENDAR");
-		frmCalendar.setBounds(100, 100, 666, 676);
-		frmCalendar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCalendar.setBounds(100, 100, 510, 435);
+		// frmCalendar.setExtendedState(JFrame.ICONIFIED);
+		frmCalendar.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		loadTasks();
+
+		setSistemTray();
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -106,6 +118,10 @@ public class Main {
 		JMenu mnMain = new JMenu("Main");
 		menuBar.add(mnMain);
 
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ExitListener());
+		mnMain.add(mntmExit);
+
 		JMenu mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);
 
@@ -122,12 +138,67 @@ public class Main {
 		frmCalendar.getContentPane().setLayout(groupLayout);
 	}
 
+	private void setSistemTray() {
+		if (SystemTray.isSupported()) {
+			tray = SystemTray.getSystemTray();
+			Image icon = Toolkit.getDefaultToolkit().getImage(
+					"date/current/" + todayDay + ".png");
+			trayIcon = new TrayIcon(icon, "Calendar");
+			trayIcon.setImageAutoSize(true);
+			frmCalendar.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent windowEvent) {
+					frmCalendar.setExtendedState(JFrame.ICONIFIED);
+				}
+			});
+		}
+//		frmCalendar.addWindowStateListener(new WindowStateListener() {
+//			public void windowStateChanged(WindowEvent e) {
+//				if (e.getNewState() == JFrame.ICONIFIED) {
+//					try {
+//						tray.add(trayIcon);
+//						frmCalendar.setVisible(false);
+////						System.out.println("added to SystemTray");
+//					} catch (AWTException ex) {
+////						System.out.println("unable to add to tray");
+//					}
+//				}
+//				if (e.getNewState() == WindowEvent.WINDOW_CLOSING) {
+//					try {
+//						tray.add(trayIcon);
+//						frmCalendar.setVisible(false);
+////						System.out.println("added to SystemTray");
+//					} catch (AWTException ex) {
+////						System.out.println("unable to add to system tray");
+//					}
+//				}
+//				if (e.getNewState() == 7) {
+//					try {
+//						tray.add(trayIcon);
+//						frmCalendar.setVisible(false);
+////						System.out.println("added to SystemTray");
+//					} catch (AWTException ex) {
+////						System.out.println("unable to add to system tray");
+//					}
+//				}
+//				if (e.getNewState() == JFrame.MAXIMIZED_BOTH) {
+//					tray.remove(trayIcon);
+//					frmCalendar.setVisible(true);
+////					System.out.println("Tray icon removed");
+//				}
+//				if (e.getNewState() == JFrame.NORMAL) {
+//					tray.remove(trayIcon);
+//					frmCalendar.setVisible(true);
+////					System.out.println("Tray icon removed");
+//				}
+//			}
+//		});
+	}
+
 	private void loadTasks() {
 		tasks = new HashMap<String, Map<String, String>>();
 		BufferedReader fr = null;
 		try {
 			fr = new BufferedReader(new FileReader("tasks"));
-//			fr = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("tasks")));
 			String line = null;
 			while ((line = fr.readLine()) != null) {
 				Map<String, String> taskByHours = null;
