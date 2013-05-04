@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URISyntaxException;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
@@ -20,7 +21,9 @@ public class ExitListener implements ActionListener {
 		if (option == JOptionPane.OK_OPTION) {
 			Writer writer = null;
 			try {
-				writer = new FileWriter("tasks", true);
+				String inputFile = getClass().getClassLoader().getResource("tasks")
+						.toURI().getPath();
+				writer = new FileWriter(inputFile, true);
 				for (Map.Entry<String, Map<String, String>> entry : Main.tasks
 						.entrySet()) {
 					for (Map.Entry<String, String> task : entry.getValue()
@@ -30,6 +33,8 @@ public class ExitListener implements ActionListener {
 					}
 				}
 			} catch (IOException ex) {
+				ex.printStackTrace();
+			} catch (URISyntaxException ex) {
 				ex.printStackTrace();
 			} finally {
 				if (writer != null) {

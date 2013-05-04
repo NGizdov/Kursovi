@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,7 +81,7 @@ public class Main {
 		frmCalendar.setIconImage(icon);
 		frmCalendar.setResizable(true);
 		frmCalendar.setTitle("CALENDAR");
-		frmCalendar.setBounds(100, 100, 510, 435);
+		frmCalendar.setBounds(100, 100, 510, 445);
 		// frmCalendar.setExtendedState(JFrame.ICONIFIED);
 		frmCalendar.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		loadTasks();
@@ -141,10 +142,8 @@ public class Main {
 	private void setSistemTray() {
 		if (SystemTray.isSupported()) {
 			// SystemTray tray = SystemTray.getSystemTray();
-			Image icon = new ImageIcon(
-					getClass().getClassLoader().getResource(
-							"date/current/" + currentDay + ".png"))
-					.getImage();
+			Image icon = new ImageIcon(getClass().getClassLoader().getResource(
+					"date/current/" + currentDay + ".png")).getImage();
 			trayIcon = new TrayIcon(icon, "Calendar");
 			trayIcon.setImageAutoSize(true);
 			frmCalendar.addWindowListener(new WindowAdapter() {
@@ -159,7 +158,9 @@ public class Main {
 		tasks = new HashMap<String, Map<String, String>>();
 		BufferedReader fr = null;
 		try {
-			fr = new BufferedReader(new FileReader("tasks"));
+			String inputFile = getClass().getClassLoader().getResource("tasks")
+					.toURI().getPath();
+			fr = new BufferedReader(new FileReader(inputFile));
 			String line = null;
 			while ((line = fr.readLine()) != null) {
 				Map<String, String> taskByHours = null;
@@ -181,6 +182,8 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		} finally {
 			if (fr != null) {
