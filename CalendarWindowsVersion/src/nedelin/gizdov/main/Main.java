@@ -1,6 +1,7 @@
 package nedelin.gizdov.main;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.SystemTray;
@@ -11,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,7 @@ import javax.swing.UIManager;
 import nedelin.gizdov.events.DayViewAction;
 import nedelin.gizdov.events.ExitListener;
 import nedelin.gizdov.events.MonthViewAction;
+import nedelin.gizdov.main.MonthView;
 
 public class Main {
 
@@ -80,8 +83,10 @@ public class Main {
 		frmCalendar.setIconImage(icon);
 		frmCalendar.setResizable(true);
 		frmCalendar.setTitle("CALENDAR");
-		frmCalendar.setBounds(100, 100, 550, 430);
+//		frmCalendar.setBounds(100, 100, 550, 430);
 		// frmCalendar.setExtendedState(JFrame.ICONIFIED);
+		frmCalendar.setMinimumSize(new Dimension(550, 430));
+		frmCalendar.setLocation(150, 150);
 		frmCalendar.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		loadTasks();
 
@@ -159,7 +164,8 @@ public class Main {
 		tasks = new HashMap<String, Map<String, String>>();
 		BufferedReader fr = null;
 		try {
-			fr = new BufferedReader(new FileReader("tasks"));
+			String inputFile = getClass().getClassLoader().getResource("tasks").toURI().getPath();
+			fr = new BufferedReader(new FileReader(inputFile));
 			String line = null;
 			while ((line = fr.readLine()) != null) {
 				Map<String, String> taskByHours = null;
@@ -181,6 +187,8 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		} finally {
 			if (fr != null) {
