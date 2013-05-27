@@ -13,6 +13,7 @@ import javax.swing.JButton;
 
 import nedelin.gizdov.events.NextMonth;
 import nedelin.gizdov.events.PrevMonth;
+import java.awt.Font;
 
 public class MonthView extends JPanel
 {
@@ -33,30 +34,37 @@ public class MonthView extends JPanel
         weekDaysPanel.setLayout(new GridLayout(1, 7, 3, 3));
 
         JLabel label = new JLabel("MONDAY");
+        label.setFont(new Font("Dialog", Font.BOLD, 10));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         weekDaysPanel.add(label);
 
         JLabel label_1 = new JLabel("TUESDAY");
+        label_1.setFont(new Font("Dialog", Font.BOLD, 10));
         label_1.setHorizontalAlignment(SwingConstants.CENTER);
         weekDaysPanel.add(label_1);
 
         JLabel label_2 = new JLabel("WEDNESDAY");
+        label_2.setFont(new Font("Dialog", Font.BOLD, 10));
         label_2.setHorizontalAlignment(SwingConstants.CENTER);
         weekDaysPanel.add(label_2);
 
         JLabel label_3 = new JLabel("THURSDAY");
+        label_3.setFont(new Font("Dialog", Font.BOLD, 10));
         label_3.setHorizontalAlignment(SwingConstants.CENTER);
         weekDaysPanel.add(label_3);
 
         JLabel label_4 = new JLabel("FRIDAY");
+        label_4.setFont(new Font("Dialog", Font.BOLD, 10));
         label_4.setHorizontalAlignment(SwingConstants.CENTER);
         weekDaysPanel.add(label_4);
 
         JLabel label_5 = new JLabel("SATURDAY");
+        label_5.setFont(new Font("Dialog", Font.BOLD, 10));
         label_5.setHorizontalAlignment(SwingConstants.CENTER);
         weekDaysPanel.add(label_5);
 
         JLabel label_6 = new JLabel("SUNDAY");
+        label_6.setFont(new Font("Dialog", Font.BOLD, 10));
         label_6.setHorizontalAlignment(SwingConstants.CENTER);
         weekDaysPanel.add(label_6);
 

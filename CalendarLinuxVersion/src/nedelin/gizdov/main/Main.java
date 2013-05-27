@@ -1,6 +1,7 @@
 package nedelin.gizdov.main;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.SystemTray;
@@ -81,7 +82,9 @@ public class Main {
 		frmCalendar.setIconImage(icon);
 		frmCalendar.setResizable(true);
 		frmCalendar.setTitle("CALENDAR");
-		frmCalendar.setBounds(100, 100, 510, 445);
+//		frmCalendar.setBounds(100, 100, 530, 470);
+		frmCalendar.setMinimumSize(new Dimension(530, 470));
+		frmCalendar.setLocation(150, 150);
 		// frmCalendar.setExtendedState(JFrame.ICONIFIED);
 		frmCalendar.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		loadTasks();

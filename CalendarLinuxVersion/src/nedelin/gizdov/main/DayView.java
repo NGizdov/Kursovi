@@ -98,9 +98,9 @@ public class DayView extends JPanel {
 								20, GroupLayout.PREFERRED_SIZE)));
 		table = new JTable(rows, columns);
 		TableColumn columnOne = table.getColumnModel().getColumn(0);
-		columnOne.setPreferredWidth(50);
+		columnOne.setPreferredWidth(70);
 		TableColumn columnTwo = table.getColumnModel().getColumn(1);
-		columnTwo.setPreferredWidth(550);
+		columnTwo.setPreferredWidth(530);
 		scrollPane.setViewportView(table);
 
 		table.setPreferredScrollableViewportSize(new Dimension(500, 400));
